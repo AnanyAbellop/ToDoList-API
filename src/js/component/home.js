@@ -1,24 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
+import { Task } from "./task";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+var counter = 0;
 
 //create your first component
 export function Home() {
+	const [todo, setTodo] = useState("");
+	const [task, setTask] = useState([]);
+	const removeTodo = index => {
+		const newTodos = [...task];
+		newTodos.splice(index, 1);
+		setTask(newTodos);
+		counter = counter - 1;
+	};
+
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+		<div style={{ backgroundColor: "#E4E0DF", color: "#B0B7AF" }}>
+			<div className="row justify-content-center">
+				<h1>{"TODO'S"}</h1>
+			</div>
+			<div className="row justify-content-center">
+				<input
+					type="text"
+					name="Tasks"
+					placeholder="What needs to be done"
+					style={{ border: "0px", backgroundColor: "#E4E0DF" }}
+					onChange={event => {
+						setTodo(event.target.value);
+					}}
+					value={todo}
+					onKeyPress={e => {
+						if (event.keyCode == 13) {
+							counter = counter + 1;
+							let newTask = {
+								name: todo
+							};
+							setTask([...task, newTask]);
+							//alert(newTask.name);
+							setTodo("");
+						}
+					}}
+				/>
+			</div>
+
+			{task.map((task, index) => {
+				return (
+					<div key={index} className="row justify-content-center">
+						<label>{task.name}</label>
+						<button
+							type="button"
+							className="btn btn-light "
+							onClick={() => removeTodo(index)}>
+							<i className="far fa-times-circle" />
+						</button>
+					</div>
+				);
+
+				//	return (<Task key={index} tarea={task.name} />);
+			})}
+
+			<div className="row justify-content-center">
+				<label>
+					{counter}
+					{" items left"}
+				</label>
+			</div>
 		</div>
 	);
 }
