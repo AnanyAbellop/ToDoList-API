@@ -45,14 +45,14 @@ export function Home() {
 
 			{task.map((task, index) => {
 				return (
-					<div key={index} className="row justify-content-center">
+					<div key={index} className="row justify-content-center ">
 						<label>{task.name}</label>
-						<button
+						<label
 							type="button"
-							className="btn btn-light "
+							className="btn   "
 							onClick={() => removeTodo(index)}>
-							<i className="far fa-times-circle" />
-						</button>
+							{"x"}
+						</label>
 					</div>
 				);
 
